@@ -94,13 +94,14 @@ Button(onClick = { viewModel.navigateTo("destination_screen") }) {
 
 
 
-In Jetpack Compose, you can hold the NavController in a ViewModel by using the rememberNavController function and storing it in the ViewModel.
+
+
+**In Jetpack Compose, you can hold the NavController in a ViewModel by using the rememberNavController function and storing it in the ViewModel**
 
 Here's an example of how this can be achieved:
 
 Create a ViewModel to hold the NavController:
-kotlin
-Copy code
+
 class MyViewModel : ViewModel() {
     val navController = mutableStateOf<NavController?>(null)
 }
