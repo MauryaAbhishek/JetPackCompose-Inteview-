@@ -42,3 +42,49 @@ ViewModel, on the other hand, is used to manage the state of an entire screen or
 While RememberSaveable can help manage the state of a single composable function, it may not be sufficient for managing the state of an entire screen or fragment. In these cases, ViewModel is a better choice for managing the state of the entire screen or fragment.
 
 In summary, RememberSaveable is used for managing the state of individual composable functions during configuration changes, while ViewModel is used for managing the state of an entire screen or fragment in an Android app. While they both help manage state, they serve different purposes and are used in different scenarios.
+
+
+
+
+
+**How to hold the navController in view model in jetpack compose**
+
+It is not recommended to hold the navController instance directly in a ViewModel in Jetpack Compose. This is because the navController is tied to the lifecycle of the composable hierarchy, and not the ViewModel. Holding a reference to navController in the ViewModel could cause memory leaks or incorrect behavior.
+
+Instead, you can use a combination of the rememberNavController() and LocalLifecycleOwner functions to obtain the navController instance in your composable functions, and pass it as a parameter to your ViewModel. Here's an example of how to do this:
+
+Define a ViewModel that takes a NavController instance as a parameter:
+
+
+class MyViewModel(private val navController: NavController) : ViewModel() {
+    // ViewModel logic here
+}
+
+
+In your composable function, obtain the navController instance using rememberNavController() and LocalLifecycleOwner:
+
+
+@Composable
+fun MyComposable() {
+    val navController = rememberNavController()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val viewModel = viewModel<MyViewModel>(navController = navController)
+
+    // Composable logic here
+}
+  
+In your ViewModel, use the navController instance to navigate between screens:
+
+class MyViewModel(private val navController: NavController) : ViewModel() {
+    fun navigateTo(destination: String) {
+        navController.navigate(destination)
+    }
+}
+  
+In your composable function, call the ViewModel's navigateTo() function to navigate between screens:
+
+Button(onClick = { viewModel.navigateTo("destination_screen") }) {
+    Text(text = "Navigate")
+}
+
+**By passing the navController instance as a parameter to your ViewModel and using it to navigate between screens, you can avoid holding the navController instance directly in the ViewModel and prevent potential memory leaks or incorrect behavior.**
