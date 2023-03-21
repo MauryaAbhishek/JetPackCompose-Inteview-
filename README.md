@@ -26,6 +26,11 @@ StateFlow is designed to work with shared state, which is useful when working wi
 
 
 
+
+
+
+
+
 **Q. Why we need ViewModel when we have rememberSaveable in jetpack compose ?**
 
 **Ans**- RememberSaveable in Jetpack Compose and ViewModel serve different purposes and are used in different scenarios.
