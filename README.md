@@ -127,3 +127,25 @@ fun OtherComposable(viewModel: MyViewModel = viewModel()) {
 }
 
 In summary, you can hold the NavController in a ViewModel by storing it as a mutable state and setting it in the ViewModel using the rememberNavController function. By retrieving the NavController from the ViewModel in other composable functions, you can use it to navigate to other screens without passing it as a parameter.
+
+
+
+
+
+**semantics attribute**
+
+If you have a button that plays a video, you can use the semantics attribute to provide additional information about the video, such as its length and format.
+
+less
+Copy code
+Button(onClick = { /* play video */ },
+    contentDescription = "Play Video",
+    modifier = Modifier.semantics {
+        contentDescription = "20-minute MP4 video"
+        playbackPosition = 0
+        duration = 20 * 60
+        playbackRate = 1f
+    }
+) {
+    Text("Play")
+}
