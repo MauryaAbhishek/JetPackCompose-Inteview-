@@ -88,3 +88,41 @@ Button(onClick = { viewModel.navigateTo("destination_screen") }) {
 }
 
 **By passing the navController instance as a parameter to your ViewModel and using it to navigate between screens, you can avoid holding the navController instance directly in the ViewModel and prevent potential memory leaks or incorrect behavior.**
+
+
+
+
+
+
+In Jetpack Compose, you can hold the NavController in a ViewModel by using the rememberNavController function and storing it in the ViewModel.
+
+Here's an example of how this can be achieved:
+
+Create a ViewModel to hold the NavController:
+kotlin
+Copy code
+class MyViewModel : ViewModel() {
+    val navController = mutableStateOf<NavController?>(null)
+}
+In the composable function where you want to use the NavController, use the rememberNavController function to retrieve the NavController and set it in the ViewModel:
+
+@Composable
+fun MyComposable(viewModel: MyViewModel = viewModel()) {
+    val navController = rememberNavController()
+    viewModel.navController.value = navController
+    // Use the NavController to navigate to other screens
+}
+
+
+
+In the composable function where you want to navigate to other screens, retrieve the NavController from the ViewModel and use it to navigate:
+
+@Composable
+fun OtherComposable(viewModel: MyViewModel = viewModel()) {
+    val navController = viewModel.navController.value ?: return
+    Button(onClick = { navController.navigate("destination_screen") }) {
+        Text(text = "Navigate")
+    }
+}
+
+In summary, you can hold the NavController in a ViewModel by storing it as a mutable state and setting it in the ViewModel using the rememberNavController function. By retrieving the NavController from the ViewModel in other composable functions, you can use it to navigate to other screens without passing it as a parameter.
